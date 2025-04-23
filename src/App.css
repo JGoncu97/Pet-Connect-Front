@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Urbanist';
+  src: url('./assets/fonts/Urbanist.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Aplicar la fuente a toda la app */
+body {
+  font-family: 'Urbanist', sans-serif;
+}
+
+@theme {
+     --breakpoint-*: initial;
+    --breakpoint-xs: 375px;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-2xl: 1440px;
+    --breakpoint-3xl: 1680px;
+    --breakpoint-4xl: 1920px;
+    --color-brand: #EC9216;
+}
+
+.react-tel-input .form-control {
+    height: 43px !important; 
+    width: 100% !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    padding-left: 40px !important;
+    font-size: 16px !important;
+    background-color: #f3f4f6 !important;
+}
+
+
+.react-tel-input .form-control {
+    height: 43px !important; 
+    width: 100% !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    padding-left: 40px !important;
+    font-size: 16px !important;
+    border:solid 1px black !important
+}
+
+/* Fondo del input */
+.p-calendar .p-inputtext {
+    background-color: #f3f4f6 !important; 
+    border: 1px solid #d1d5db !important; 
+    color: #374151 !important; 
+    padding-left: 40px;
+  }
+  
+  /* Estilo cuando el input está enfocado */
+  .p-calendar .p-inputtext:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #EC9216 !important; 
+    border-color: #EC9216 !important;
+  }
+  
+  /* Fondo del calendario desplegable */
+  .p-datepicker {
+    background-color: #f3f4f6 !important; 
+    border: 1px solid #d1d5db !important;
+    color: #374151 !important;
+  }
+
+  
+  
