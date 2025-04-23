@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Intro1 from '../../assets/images/Introduccion_1.png';
+import Intro from '../../assets/images/PhoneImg.png'
 
 
 export const Introduction1 = () => {
@@ -21,7 +22,7 @@ export const Introduction1 = () => {
                 >
                 
                     <img 
-                        src={Intro1} 
+                        src={Intro} 
                         alt="Introducción" 
                         className="relative top-0 w-full max-w-md max-h-[85vh] h-auto object-contain"
                     />
