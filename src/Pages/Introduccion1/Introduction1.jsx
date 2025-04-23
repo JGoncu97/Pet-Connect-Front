@@ -12,12 +12,12 @@ export const Introduction1 = () => {
 
 
     return (
-        <div>
-            <div className="h-screen p-2 relative overflow-hidden ">
+        <div className='h-auto'>
+            <div className="min-h-screen p-2 relative overflow-hidden  ">
                 
                 <div 
                     className="absolute inset-0 bg-orange-400 flex justify-center items-end h-[95vh] xs:h-[95vh] sm:h-[35vh] md:h-[30vh] lg:h-[88vh] rounded-b-[5rem]"
-                    style={{ clipPath: 'ellipse(100% 460px at center top)' }}
+                    style={{ clipPath: 'ellipse(100% 400px at center top)' }}
                 >
                 
                     <img 
@@ -28,7 +28,7 @@ export const Introduction1 = () => {
                 </div>
 
             
-                <div className=" absolute top-125 xs:top-115 lg:top-90 relative w-full lg:w-screen  bg-white  flex flex-col items-center z-20  overflow-hidden   ">
+                <div className=" absolute top-125 xs:top-105 lg:top-90 relative w-full lg:w-screen  bg-white  flex flex-col items-center z-20  overflow-hidden   ">
                 
                     <div className="p-6 text-center w-full  flex flex-col items-center rounded-lg">
                         <h2 className="text-xl font-bold">Más que una app, un puente hacia el hogar</h2>
