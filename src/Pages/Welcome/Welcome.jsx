@@ -56,9 +56,9 @@ export const Welcome = () => {
     }, [errorState]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen sm:p-4 md:bg-gray-100 border mb-2">
-      <div className="flex flex-col p-6 w-screen rounded-xl max-w-md md:shadow-lg items-center bg-white border">
-        <img src={logo} alt="Logo" className="w-40 my-15 border mt-2" />
+    <div className="flex items-center justify-center min-h-screen sm:p-4 md:bg-gray-100 mb-2">
+      <div className="flex flex-col p-6 w-screen rounded-xl max-w-md md:shadow-lg items-center bg-white ">
+        <img src={logo} alt="Logo" className="w-40 my-15  mt-2" />
         <h1 className="text-2xl font-bold text-gray-900 mb-2 border">Bienvenido</h1>
         <h2 className="text-base text-gray-500 mb-10">
           Ingresa a tu cuenta para continuar
@@ -74,7 +74,7 @@ export const Welcome = () => {
         />
         <ButtonPrimary path="/register" text="Crear una Cuenta" />
         <ButtonSecondary path="/login" text="Iniciar Sesión" />
-        <p className="text-xs text-gray-400 mt-10">
+        <p className="text-xs text-gray-400 mt-14">
           Políticas de Privacidad • Términos de Servicio
         </p>
       </div>
