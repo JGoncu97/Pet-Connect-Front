@@ -28,9 +28,9 @@ export const Introduction1 = () => {
                 </div>
 
             
-                <div className=" absolute top-125 xs:top-113 lg:top-90 relative w-full lg:w-screen  bg-white  flex flex-col items-center z-20  overflow-hidden   ">
+                <div className=" absolute top-125 xs:top-115 lg:top-90 relative w-full lg:w-screen  bg-white  flex flex-col items-center z-20  overflow-hidden   ">
                 
-                    <div className="p-6 text-center w-full  flex flex-col items-center rounded-lg mb-10">
+                    <div className="p-6 text-center w-full  flex flex-col items-center rounded-lg">
                         <h2 className="text-xl font-bold">Más que una app, un puente hacia el hogar</h2>
                         <p className="text-gray-600">
                             Cuando una mascota se pierde, cada segundo cuenta. Un escaneo y el reencuentro comienza.
