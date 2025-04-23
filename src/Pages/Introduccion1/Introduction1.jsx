@@ -26,7 +26,7 @@ export const Introduction1 = () => {
                 </div>
 
                 {/* Sección inferior con contenido */}
-                <div className="absolute left-0 right-0 z-20 bottom-8 h-auto ">
+                <div className="absolute left-0 right-0 z-20 bottom-15 h-auto ">
                     <div className="p-8 text-center">
                         <h2 className="text-xl font-bold ">Más que una app, un puente hacia el hogar</h2>
                         <p className="text-gray-600 mb-8">
