@@ -17,7 +17,7 @@ export const Introduction1 = () => {
                 
                 <div 
                     className="absolute inset-0 bg-orange-400 flex justify-center items-end h-[95vh] xs:h-[95vh] sm:h-[35vh] md:h-[30vh] lg:h-[88vh] rounded-b-[5rem]"
-                    style={{ clipPath: 'ellipse(100% 500px at center top)' }}
+                    style={{ clipPath: 'ellipse(100% 460px at center top)' }}
                 >
                 
                     <img 
@@ -28,7 +28,7 @@ export const Introduction1 = () => {
                 </div>
 
             
-                <div className=" absolute top-125 xs:top-145 lg:top-90 relative w-full lg:w-screen  bg-white  flex flex-col items-center z-20  overflow-hidden   ">
+                <div className=" absolute top-125 xs:top-113 lg:top-90 relative w-full lg:w-screen  bg-white  flex flex-col items-center z-20  overflow-hidden   ">
                 
                     <div className="p-6 text-center w-full  flex flex-col items-center rounded-lg mb-10">
                         <h2 className="text-xl font-bold">Más que una app, un puente hacia el hogar</h2>
