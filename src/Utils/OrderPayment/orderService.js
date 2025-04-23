@@ -6,7 +6,7 @@ console.log(API_URL);
 class OrderService {
     static async createOrder(orderData) {
         try {
-            console.log('URL de la API:', `https://petconnect-backend-production.up.railway.app/api/orders`);
+            console.log('URL de la API:', `${API_URL}/api/orders`);
             console.log('Datos de la orden:', orderData);
             
             const token = sessionStorage.getItem('accessToken');
@@ -14,7 +14,7 @@ class OrderService {
                 throw new Error('No hay token de autenticación');
             }
 
-            const response = await fetch(`https://petconnect-backend-production.up.railway.app/api/orders`, {
+            const response = await fetch(`${API_URL}/api/orders`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
