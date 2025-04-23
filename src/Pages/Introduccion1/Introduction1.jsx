@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import Intro1 from '../../assets/images/Introduccion_1.png';
 import Intro from '../../assets/images/PhoneImg.png'
 
 
