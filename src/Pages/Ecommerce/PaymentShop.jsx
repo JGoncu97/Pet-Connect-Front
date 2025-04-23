@@ -359,6 +359,7 @@ export const PaymentShop = () => {
             {sessionExpired ? (
                 <ModalResponseEpayco
                     imgProfile={WarningImg}
+                    textTitle="Sesión expirada"
                     setModalOpen={setSessionExpired}
                     navigate={navigate}
                     path="/login"
@@ -368,6 +369,7 @@ export const PaymentShop = () => {
             ) : error ? (
                 <ModalResponseEpayco
                     imgProfile={ErrorImg}
+                    textTitle="Error al crear la orden"
                     setModalOpen={() => setError(null)}
                     navigate={navigate}
                     path="/payment/shop"
@@ -377,6 +379,7 @@ export const PaymentShop = () => {
             ) : orderCreated ? (
                 <ModalResponseEpayco
                     imgProfile={SuccessImg}
+                    textTitle="Orden creada"
                     setModalOpen={setOrderCreated}
                     navigate={navigate}
                     path="/payment/shop"
