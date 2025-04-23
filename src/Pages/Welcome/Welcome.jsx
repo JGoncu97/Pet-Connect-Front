@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { GoogleSignUp } from "../../Components/GoogleAuth/GoogleSignUp";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/images/logoPetConnect.png";
+import logo from "../../assets/images/LogoPetConnect.png";
 import { ButtonPrimary } from "../../Components/Buttons/ButtonPrimary";
 import { ButtonSecondary } from "../../Components/Buttons/ButtonSecondary";
 import { useAuth } from "../../Contexts/AuthContext/AuthContext";
