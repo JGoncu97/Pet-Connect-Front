@@ -56,7 +56,7 @@ export const Welcome = () => {
     }, [errorState]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen sm:p-4 md:bg-gray-100 mb-2">
+    <div className="flex items-center justify-center  sm:p-4 md:bg-gray-100  h-auto  ">
       <div className="flex flex-col p-6 w-screen rounded-xl max-w-md md:shadow-lg items-center bg-white ">
         <img src={logo} alt="Logo" className="w-40 my-15  mt-2" />
         <h1 className="text-2xl font-bold text-gray-900 mb-2 ">Bienvenido</h1>
