@@ -1,45 +1,41 @@
 import { useState, useEffect } from "react";
 import { GoogleSignUp } from "../../Components/GoogleAuth/GoogleSignUp";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/images/LogoPetConnect.png";
+import logo from "../../assets/images/logoPetConnect.png";
 import { ButtonPrimary } from "../../Components/Buttons/ButtonPrimary";
 import { ButtonSecondary } from "../../Components/Buttons/ButtonSecondary";
 import { useAuth } from "../../Contexts/AuthContext/AuthContext";
 import { useHasPetsUser } from "../../Contexts/HasPetsUser/HasPetsUser";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export const Welcome = () => {
   const navigate = useNavigate();
 
-  //instancias de contextos
-  const auth = useAuth();
-  const pets = useHasPetsUser();
+    //instancias de contextos
+    const auth = useAuth();
+    const pets = useHasPetsUser();
+  
+    // Verificamos si el contexto de autenticación está disponible antes de usarlo
+    if (!auth) {
+      return (
+        <div className="flex justify-center items-center min-h-screen">
+          Cargando...
+        </div>
+      );
+    }
+      // desestrucuring de los contextos y hooks
+    const { login } = auth ?? {};
+    const { changeHasPetsUser } = pets ?? {};
 
-  // Verificamos si el contexto de autenticación está disponible antes de usarlo
-  if (!auth) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        Cargando...
-      </div>
-    );
-  }
+    // Estados locales que cambian con el Componente de Google
+    const [user, setUser] = useState(null);
+    const [accessToken, setAccessToken] = useState(null);
+    const [hasPetsState, setHasPetsState] = useState(false);
+    const [isNewUserState, setIsNewUserState] = useState(false);
+    const [errorState, setErrorState] = useState(null);
 
-  // desestrucuring de los contextos y hooks
-  const { login } = auth ?? {};
-  const { changeHasPetsUser } = pets ?? {};
-
-  // Estados locales que cambian con el Componente de Google
-  const [user, setUser] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
-  const [hasPetsState, setHasPetsState] = useState(false);
-  const [isNewUserState, setIsNewUserState] = useState(false);
-  const [errorState, setErrorState] = useState(null);
-
-  // Efectos para las acciones de los estados
-  useEffect(() => {
-    if (user && accessToken) {
-      try {
+    // Efectos para las acciones de los estados
+    useEffect(() => {
+      if (user) {
         login(accessToken, user);
         if (hasPetsState) {
           changeHasPetsUser(true);
@@ -49,19 +45,15 @@ export const Welcome = () => {
         } else {
           navigate("/home");
         }
-      } catch (error) {
-        console.error('Error al iniciar sesión:', error);
-        setErrorState('Error al iniciar sesión. Por favor, inténtalo de nuevo.');
       }
-    }
-  }, [user, accessToken, hasPetsState, isNewUserState, login, changeHasPetsUser, navigate]);
-
-  // Manejo de error
-  useEffect(() => {
-    if (errorState) {
-      toast.error(errorState);
-    }
-  }, [errorState]);
+    }, [user]);
+  
+    // Manejo de error
+    useEffect(() => {
+      if (errorState) {
+        toast.error(errorState);
+      }
+    }, [errorState]);
 
   return (
     <div className="bg-white flex items-center justify-center min-h-screen sm:p-4 md:bg-gray-100">
@@ -86,18 +78,6 @@ export const Welcome = () => {
           Políticas de Privacidad • Términos de Servicio
         </p>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };
