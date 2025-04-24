@@ -134,9 +134,12 @@ export const PaymentShop = () => {
             }
             
             // Configurar ePayco
+            const backendUrl = 'https://pruebadesplieguebackend-production.up.railway.app';
+            const frontendUrl = import.meta.env.VITE_FRONTEND_URL || 'http://localhost:5173';
+
             const handler = window.ePayco.checkout.configure({
                 key: import.meta.env.VITE_EPAYCO_PUBLIC_KEY,
-                test: true // Forzar modo de prueba
+                test: import.meta.env.VITE_EPAYCO_TEST === 'true'
             });
             
             // Abrir el checkout
@@ -144,19 +147,22 @@ export const PaymentShop = () => {
                 name: 'Códigos QR PetConnect',
                 description: `Orden de ${formData.quantity || 1} códigos QR`,
                 currency: 'cop',
-                amount: (formData.quantity || 1) * 10000,
+                amount: (formData.quantity || 1) * 15000,
                 tax_base: '0',
                 tax: '0',
                 country: 'co',
                 lang: 'es',
-                external: 'false',
-                confirmation: import.meta.env.VITE_EPAYCO_CONFIRMATION_URL || 'http://localhost:5000/api/payments/confirmation', // Webhook que ePayco llamará para notificar al backend
-                response: import.meta.env.VITE_EPAYCO_RESPONSE_URL || 'https://secure.epayco.co/landingresume', // URL donde el usuario será redirigido después del pago
+                external: 'true',
+                confirmation: `${backendUrl}/api/payments/confirmation`,
+                response: `${frontendUrl}/payment/response`,
                 name_billing: formData.customerName || '',
                 address_billing: formData.shippingAddress || '',
                 email_billing: formData.customerEmail || '',
                 mobilephone_billing: formData.customerPhone || '',
-                extra1: orderId
+                extra1: orderId,
+                extra2: 'QR_CODES',
+                extra3: formData.quantity.toString(),
+                test: import.meta.env.VITE_EPAYCO_TEST === 'true'
             });
         } catch (error) {
             console.error('Error en handlePayWithEpayco:', error);
