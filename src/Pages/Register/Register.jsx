@@ -113,7 +113,7 @@ export const Register = () => {
       >
         <div
           className="
-        flex flex-col pt-6 pb-13 w-screen  max-w-md md:shadow-lg items-center bg-white border
+        flex flex-col pt-6 w-screen  max-w-md md:shadow-lg items-center bg-white
       "
         >
           {/* Toastify Container with improved positioning */}
