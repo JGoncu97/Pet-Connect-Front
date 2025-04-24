@@ -9,13 +9,10 @@ import Paper from '../../assets/images/Paper.png';
 import { InputField } from "../../Components/InputField/InputField";
 import { ButtonPrimary } from "../../Components/Buttons/ButtonPrimary";
 import EditImg from '../../assets/images/EditImg3.png'
-import { FetchUpdatePhotoU } from "../../Utils/Fetch/FetchUpdatePhotoU/FetchUpdatePhotoU";
-import { isTokenExpired } from "../../Utils/Helpers/IsTokenExpired/IsTokenExpired";
-import { FetchRefreshToken } from "../../Utils/Fetch/FetchRefreshToken/FetchRefreshToken";
-import { FetchUpdateUser } from "../../Utils/Fetch/FetchUpdateUser/FetchUpdateUser";
 import { NavButtonStep } from "../../Components/NavButtonStep/NavButtonStep";
 import {City as ciudadesPorDepartamento} from '../../Utils/Data-Schema/City'
 import {Department as departamentos} from '../../Utils/Data-Schema/Department'
+import { useFetchUpdateUser } from "../../Hooks/useFetchUpdateUser/useFetchUpdateUser";
 
 export const StepUser = () => {
     const navigate = useNavigate();
@@ -25,6 +22,7 @@ export const StepUser = () => {
     const [phone, setPhone] = useState(""); 
     const [city,setCity] = useState([])
     const [department , setDepartment] = useState("")
+    const { updateUser, isLoading, error } = useFetchUpdateUser();
 
     // Obtener datos iniciales del usuario
     useEffect(() => {
@@ -77,67 +75,8 @@ export const StepUser = () => {
         
         console.log("Datos enviados:", Object.fromEntries(formDataUser));
 
-        let token = sessionStorage.getItem('accessToken');
-
-        if (!token || isTokenExpired(token)) {
-            try {
-                await FetchRefreshToken();
-                token = sessionStorage.getItem('accessToken');
-            } catch (error) {
-                console.log("Error al refrescar el token:", error);
-                return;
-            }
-        }
-
-        try {
-            const responseUser = await FetchUpdateUser(formDataUser, token); 
-            
-            if (responseUser.ok) {
-                const currentUserData = JSON.parse(sessionStorage.getItem("userData")) || {};
-                
-                const updatedUserData = {
-                    ...currentUserData,
-                    name: dataForm.name,
-                    phone: phone,
-                    gender: dataForm.gender,
-                    country: dataForm.country,
-                    state: department,
-                    city: dataForm.city,
-                    address: dataForm.address,
-                    profile_picture: DefaultProfile
-                };
-                
-                console.log("Datos del usuario a guardar:", updatedUserData);
-                sessionStorage.setItem("userData", JSON.stringify(updatedUserData));
-
-                const formDataPhoto = new FormData();
-                if (filePfp) {
-                    formDataPhoto.append("profile_picture", filePfp);
-                } else {
-                    const response = await fetch(DefaultProfile);
-                    const blob = await response.blob();
-                    formDataPhoto.append("profile_picture", blob, "default-profile.png");
-                }
-
-                const responsePhoto = await FetchUpdatePhotoU(formDataPhoto, token);
-                if (responsePhoto.ok) {
-                    const finalUserData = {
-                        ...updatedUserData,
-                        profile_picture: responsePhoto.profilePicture || DefaultProfile
-                    };
-                    console.log("Datos finales del usuario:", finalUserData);
-                    sessionStorage.setItem("userData", JSON.stringify(finalUserData));
-                } else {
-                    console.error("No se pudo actualizar la foto:", responsePhoto.message);
-                }
-
-                navigate("/step-pet");
-            } else {
-                console.error("Error al registrar usuario:", responseUser.message);
-            }
-        } catch (error) {
-            console.error("Error al registrar Usuario:", error);
-        }
+        await updateUser(formDataUser, filePfp);
+        navigate("/step-pet");
     };
 
     return (
@@ -238,7 +177,7 @@ export const StepUser = () => {
                             className="w-full p-3 mb-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand" 
                         />
                     </div>
-                    <ButtonPrimary text='Continuar' />
+                    <ButtonPrimary text='Continuar' disabled={isLoading} />
                 </form>
             </div>
         </div>
