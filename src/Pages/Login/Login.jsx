@@ -119,8 +119,7 @@ export const Login = () => {
       >
         <div
           className="
-            w-full 
-            h-screen
+           flex flex-col p-4 w-screen rounded-xl max-w-md md:shadow-lg items-center bg-white 
           "
         >
           <ToastContainer
