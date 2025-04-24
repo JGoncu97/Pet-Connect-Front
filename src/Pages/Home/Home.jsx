@@ -11,6 +11,7 @@ import petImage from '../../assets/images/petImage.png'
 import iconoHomeUno from '../../assets/images/iconoHomeUno.png'
 import iconoHomeDos from '../../assets/images/iconoHomeDos.png'
 import logo from '../../assets/images/LogoPetConnect.png'
+import notification from '../../assets/images/Notifications.png'
 
 export const Home = () => {
   const auth = useAuth();
@@ -30,11 +31,14 @@ export const Home = () => {
     <div className="min-h-screen bg-gray-50 pb-20">
       <div className="flex flex-col bg-white p-6">
         {/* Header */}
-        <header className="flex items-center justify-center bg-white py-4">
-          <img src={logo} alt="Logo" className="w-8 h-8 mr-2" />
+        <header className="flex items-center justify-between bg-white py-4 ">
+          <img src={logo} alt="Logo" className="w-10 h-10 mr-2" />
           <Link to={"/home"} className="text-3xl font-bold">
             Pet Connect
           </Link>
+          <button className="w-14 h-14 flex items-center justify-center rounded-full" onClick={() => navigate('/notifications')}>
+            <img className='w-13 h-13' src={notification} alt="Notification"/>
+          </button>
         </header>
 
         {/* Profile Section */}
