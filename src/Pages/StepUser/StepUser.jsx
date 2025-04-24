@@ -123,14 +123,14 @@ export const StepUser = () => {
   };
 
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-100 p-6 min-h-screen">
-            <div className="bg-white p-6 rounded-2xl  max-w-sm ">
+        <div className="flex flex-col items-center justify-center">
+            <div className="p-6 border w-screen">
                 <NavButtonStep  onClick={()=>navigate(-1)} img={Position} text={'1/3'} />
-                <div className="mb-4 p-2 text-center">
+                    <div className="mb-4 p-2 text-center">
                         <h2 className="text-2xl font-bold mb-2 ">¡Creando tu Perfil!</h2>
                     </div>
 
-                <div className="flex justify-center mb-6">
+                    <div className="flex justify-center mb-6">
                             <label htmlFor="profile-upload" className="relative cursor-pointer">
                               <img
                                 src={profileImage}
@@ -146,7 +146,7 @@ export const StepUser = () => {
                               className="hidden"
                               onChange={handleImageChange}
                             />
-                          </div>
+                    </div>
                 <form onSubmit={handleSubmit(onSubmitForm)} >
                     
                     <div className="flex flex-col gap-2 mt-4">
