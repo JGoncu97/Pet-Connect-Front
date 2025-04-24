@@ -17,11 +17,11 @@ export const StepTag = () => {
 
 
     return(
-        <div className="flex flex-col items-center justify-center ">
-            <div className="bg-white p-4  w-full max-w-md">
+        <div className="flex flex-col items-center justify-center  ">
+            <div className=" p-6 w-screen  items-center">
                 <NavButtonStep  onClick={handleBack} img={Position} text={'3/3'} />
-                <div className="mb-4 p-2 flex flex-col items-center">
-                <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">Vincula la etiqueta QR de tu mascota</h2>
+                <div className="mb-2 p-2 flex flex-col items-center">
+                <h2 className="text-2xl font-bold text-center text-gray-800 ">Vincula la etiqueta QR de tu mascota</h2>
                     <img src={ImgQR} alt="" />
                 <p className="text-center text-gray-600 ">Escanear la etiqueta de la mascota proporciona acceso a su perfil y a su información de contacto.<br/>Con una exploración, tu compañero regresará a casa.</p>
                 </div>
