@@ -9,6 +9,15 @@ export const NotificationRequest = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    // Verificar si ya se ha tomado una decisión sobre las notificaciones
+    const notificationDecision = localStorage.getItem("notificationDecision");
+    
+    if (notificationDecision) {
+      // Si ya se tomó una decisión, redirigir directamente a welcome
+      navigate("/welcome");
+      return;
+    }
+
     // Verificar si el navegador soporta notificaciones
     const notificationsSupported = typeof window !== 'undefined' && 'Notification' in window;
     setIsSupported(notificationsSupported);
@@ -18,19 +27,20 @@ export const NotificationRequest = () => {
       const currentPermission = Notification.permission;
       setPermission(currentPermission);
       
-      if (currentPermission === "granted") {
-        setMessage("Notificaciones ya activadas. ¡Genial!");
-      } else if (currentPermission === "denied") {
-        setMessage("Has bloqueado las notificaciones. Puedes activarlas en la configuración de tu navegador.");
+      // Si ya hay un permiso diferente a default, guardar decisión y redirigir
+      if (currentPermission !== "default") {
+        localStorage.setItem("notificationDecision", currentPermission);
+        navigate("/welcome");
       }
     } else {
       setMessage("Tu dispositivo no soporta notificaciones web, pero podrás usar la app normalmente.");
     }
-  }, []);
+  }, [navigate]);
 
   const requestPermission = async () => {
     // Si el navegador no soporta notificaciones o ya tenemos permiso, solo continuamos
     if (!isSupported || permission === "granted" || permission === "denied") {
+      localStorage.setItem("notificationDecision", permission || "unsupported");
       navigate("/welcome");
       return;
     }
@@ -39,6 +49,9 @@ export const NotificationRequest = () => {
     try {
       const result = await Notification.requestPermission();
       setPermission(result);
+      
+      // Guardar la decisión del usuario
+      localStorage.setItem("notificationDecision", result);
       
       if (result === "granted") {
         setMessage("¡Notificaciones activadas con éxito!");
@@ -67,11 +80,15 @@ export const NotificationRequest = () => {
       }, 1500);
     } catch (error) {
       console.error("Error al solicitar permisos de notificación:", error);
+      // Guardar que hubo un error, para no volver a preguntar
+      localStorage.setItem("notificationDecision", "error");
       navigate("/welcome");
     }
   };
 
   const handleSkip = () => {
+    // Guardar la decisión de omitir
+    localStorage.setItem("notificationDecision", "skipped");
     navigate("/welcome");
   };
 
