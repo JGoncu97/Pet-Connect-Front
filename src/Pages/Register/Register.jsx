@@ -113,7 +113,7 @@ export const Register = () => {
       >
         <div
           className="
-        flex flex-col pt-2 w-screen  max-w-md md:shadow-lg items-center bg-white
+        flex flex-col pt-2 w-screen items-center
       "
         >
           {/* Toastify Container with improved positioning */}
@@ -131,7 +131,7 @@ export const Register = () => {
             className="z-50"
           />
 
-          <div className="p-2 sm:p-8 mt-8">
+          <div className="p-2 sm:p-4 mt-8 ">
             <header className="mb-6 text-center">
               <h2
                 className="
@@ -159,9 +159,10 @@ export const Register = () => {
               onSubmit={handleSubmit(onSubmit)}
               noValidate
               aria-label="Formulario de registro"
+              className=" w-[20rem]"
             >
               {/* Email Input */}
-              <div className="mb-4">
+              <div className="mb-4 ">
                 <InputField
                   name="email"
                   label="Email"
