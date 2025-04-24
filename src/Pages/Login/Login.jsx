@@ -113,25 +113,14 @@ export const Login = () => {
 
       <div
         className={`
-          flex items-center justify-center 
-          min-h-screen 
-          px-4 py-6 
-          bg-gray-100 
+          flex items-center justify-center h-auto
           ${isLoading ? "blur-sm pointer-events-none" : ""}
         `}
       >
         <div
           className="
             w-full 
-            max-w-md 
-            bg-white 
-            rounded-2xl 
-            shadow-xl 
-            overflow-hidden 
-            transition-all 
-            duration-300 
-            ease-in-out
-            hover:shadow-2xl
+            h-screen
           "
         >
           <ToastContainer
