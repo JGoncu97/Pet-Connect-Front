@@ -339,8 +339,12 @@ export const PaymentShop = () => {
                                             register={register}
                                             placeholder="Nombre"
                                             validation={{
-                                                required: "Nombre es requerido",
-                                                minLength: { value: 2, message: "Mínimo 2 caracteres" }
+                                                required: "El nombre es obligatorio",
+                                                minLength: { value: 2, message: "El nombre debe tener al menos 2 caracteres" },
+                                                pattern: {
+                                                    value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+                                                    message: "El nombre solo puede contener letras y espacios"
+                                                }
                                             }}
                                             disabled={isLoading}
                                         />
@@ -354,10 +358,10 @@ export const PaymentShop = () => {
                                             register={register}
                                             placeholder="Email"
                                             validation={{
-                                                required: "Email es requerido",
+                                                required: "El correo electrónico es obligatorio",
                                                 pattern: {
                                                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                                    message: "Email inválido"
+                                                    message: "Por favor ingresa un correo electrónico válido (ejemplo: usuario@dominio.com)"
                                                 }
                                             }}
                                             disabled={isLoading}
@@ -372,10 +376,10 @@ export const PaymentShop = () => {
                                             register={register}
                                             placeholder="Teléfono"
                                             validation={{
-                                                required: "Teléfono es requerido",
+                                                required: "El número de teléfono es obligatorio",
                                                 pattern: {
                                                     value: /^[0-9]{10}$/,
-                                                    message: "Teléfono inválido (10 dígitos)"
+                                                    message: "El teléfono debe tener 10 dígitos numéricos, sin espacios ni caracteres especiales"
                                                 }
                                             }}
                                             disabled={isLoading}
@@ -396,8 +400,15 @@ export const PaymentShop = () => {
                                             register={register}
                                             placeholder="Dirección"
                                             validation={{
-                                                required: "Dirección es requerida",
-                                                minLength: { value: 5, message: "Mínimo 5 caracteres" }
+                                                required: "La dirección de envío es obligatoria",
+                                                minLength: { 
+                                                    value: 5, 
+                                                    message: "La dirección debe tener al menos 5 caracteres" 
+                                                },
+                                                pattern: {
+                                                    value: /^[a-zA-Z0-9\s.#-]+$/,
+                                                    message: "Por favor ingresa una dirección válida (puede contener letras, números, #, - y .)"
+                                                }
                                             }}
                                             disabled={isLoading}
                                         />
@@ -411,8 +422,15 @@ export const PaymentShop = () => {
                                             register={register}
                                             placeholder="Ciudad"
                                             validation={{
-                                                required: "Ciudad es requerida",
-                                                minLength: { value: 2, message: "Mínimo 2 caracteres" }
+                                                required: "La ciudad es obligatoria",
+                                                minLength: { 
+                                                    value: 2, 
+                                                    message: "El nombre de la ciudad debe tener al menos 2 caracteres" 
+                                                },
+                                                pattern: {
+                                                    value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+                                                    message: "El nombre de la ciudad solo puede contener letras y espacios"
+                                                }
                                             }}
                                             disabled={isLoading}
                                         />
@@ -426,8 +444,15 @@ export const PaymentShop = () => {
                                             register={register}
                                             placeholder="Departamento"
                                             validation={{
-                                                required: "Departamento es requerido",
-                                                minLength: { value: 2, message: "Mínimo 2 caracteres" }
+                                                required: "El departamento es obligatorio",
+                                                minLength: { 
+                                                    value: 3, 
+                                                    message: "El nombre del departamento debe tener al menos 3 caracteres" 
+                                                },
+                                                pattern: {
+                                                    value: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
+                                                    message: "El nombre del departamento solo puede contener letras y espacios"
+                                                }
                                             }}
                                             disabled={isLoading}
                                         />
@@ -441,10 +466,10 @@ export const PaymentShop = () => {
                                             register={register}
                                             placeholder="Código postal"
                                             validation={{
-                                                required: "Código postal es requerido",
+                                                required: "El código postal es obligatorio",
                                                 pattern: {
                                                     value: /^[0-9]{6}$/,
-                                                    message: "Código postal inválido (6 dígitos)"
+                                                    message: "El código postal debe tener exactamente 6 dígitos numéricos"
                                                 }
                                             }}
                                             disabled={isLoading}
