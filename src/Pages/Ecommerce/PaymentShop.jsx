@@ -134,16 +134,17 @@ export const PaymentShop = () => {
             }
             
             // Configurar ePayco
-            const backendUrl = 'https://pruebadesplieguebackend-production.up.railway.app';
+            const backendUrl = 'https://petconnect-backend-production.up.railway.app';
             const frontendUrl = import.meta.env.VITE_FRONTEND_URL || 'http://localhost:5173';
 
             const handler = window.ePayco.checkout.configure({
                 key: import.meta.env.VITE_EPAYCO_PUBLIC_KEY,
-                test: 'true'
+                test: true
             });
             
             // Abrir el checkout
             handler.open({
+                // Parámetros de compra (obligatorios)
                 name: 'Códigos QR PetConnect',
                 description: `Orden de ${formData.quantity || 1} códigos QR`,
                 currency: 'cop',
@@ -153,16 +154,33 @@ export const PaymentShop = () => {
                 country: 'co',
                 lang: 'es',
                 external: 'true',
+
+                // Configuración de respuesta
+                response: `${backendUrl}/api/payments/response`,
                 confirmation: `${backendUrl}/api/payments/confirmation`,
-                response: `${frontendUrl}/payment/response`,
-                name_billing: formData.customerName || '',
-                address_billing: formData.shippingAddress || '',
-                email_billing: formData.customerEmail || '',
-                mobilephone_billing: formData.customerPhone || '',
+                
+                // Información del cliente
+                name_billing: formData.customerName,
+                address_billing: formData.shippingAddress,
+                type_doc_billing: 'cc',
+                mobilephone_billing: formData.customerPhone,
+                number_doc_billing: '0000000000',
+                email_billing: formData.customerEmail,
+                
+                // Atributos adicionales
                 extra1: orderId,
                 extra2: 'QR_CODES',
                 extra3: formData.quantity.toString(),
-                test: import.meta.env.VITE_EPAYCO_TEST === 'true'
+                
+                // URLs de respuesta
+                response_url: `${backendUrl}/api/payments/response`,
+                confirmation_url: `${backendUrl}/api/payments/confirmation`,
+                
+                // Información de facturación
+                invoice: orderId,
+                
+                // Modo de prueba
+                test: true
             });
         } catch (error) {
             console.error('Error en handlePayWithEpayco:', error);
