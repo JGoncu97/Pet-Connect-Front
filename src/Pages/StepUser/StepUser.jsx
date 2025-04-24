@@ -82,7 +82,7 @@ export const StepUser = () => {
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="p-6 w-screen">
-                <NavButtonStep onClick={()=>navigate(-1)} img={Position} text={'1/3'} />
+                <NavButtonStep onClick={()=>navigate('/register')} img={Position} text={'1/3'} />
                 <div className="mb-4 p-2 text-center">
                     <h2 className="text-2xl font-bold mb-2">¡Creando tu Perfil!</h2>
                 </div>
