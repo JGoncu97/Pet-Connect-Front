@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { isTokenExpired } from '../../Utils/Helpers/IsTokenExpired/IsTokenExpired';
 import { FetchRefreshToken } from '../../Utils/Fetch/FetchRefreshToken/FetchRefreshToken';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,13 @@ import { ModalResponseEpayco } from '../../Components/ModalBasic/ModalResponseEp
 export const PaymentShop = () => {
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('ref_payco')) {
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    }, []);
 
     const [formData, setFormData] = useState({
         quantity: 1,
@@ -110,7 +117,24 @@ export const PaymentShop = () => {
         }
     };
 
-    const handlePayWithEpayco = async () => {
+    // Función optimizada para cargar el script de ePayco
+    const loadEpaycoScript = useCallback(() => {
+        return new Promise((resolve, reject) => {
+            if (window.ePayco) {
+                resolve(window.ePayco);
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = 'https://checkout.epayco.co/checkout.js';
+            script.async = true;
+            script.onload = () => resolve(window.ePayco);
+            script.onerror = () => reject(new Error('No se pudo cargar el script de ePayco'));
+            document.body.appendChild(script);
+        });
+    }, []);
+
+    const handlePayWithEpayco = useCallback(async () => {
         try {
             const orderId = sessionStorage.getItem('currentOrderId');
             if (!orderId) {
@@ -122,43 +146,31 @@ export const PaymentShop = () => {
                 throw new Error('Sesión expirada');
             }
 
-            // Cargar el script de ePayco si aún no está cargado
-            if (!window.ePayco) {
-                const script = document.createElement('script');
-                script.src = 'https://checkout.epayco.co/checkout.js';
-                script.async = true;
-                document.body.appendChild(script);
-                
-                // Esperar a que se cargue el script
-                await new Promise(resolve => script.onload = resolve);
-            }
+            // Cargar el script de ePayco usando la función optimizada
+            const ePayco = await loadEpaycoScript();
             
             // Configurar ePayco
             const backendUrl = 'https://petconnect-backend-production.up.railway.app';
-            const frontendUrl = import.meta.env.VITE_FRONTEND_URL || 'http://localhost:5173';
+            const frontendUrl = 'https://pet-connect-front-nu.vercel.app';
 
-            const handler = window.ePayco.checkout.configure({
+            const handler = ePayco.checkout.configure({
                 key: import.meta.env.VITE_EPAYCO_PUBLIC_KEY,
                 test: true
             });
             
-            // Abrir el checkout
+            // Abrir el checkout con interfaz mejorada
             handler.open({
                 // Parámetros de compra (obligatorios)
                 name: 'Códigos QR PetConnect',
-                description: `Orden de ${formData.quantity || 1} códigos QR`,
+                description: `Orden de ${formData.quantity || 1} códigos QR para tu mascota`,
                 currency: 'cop',
                 amount: (formData.quantity || 1) * 15000,
                 tax_base: '0',
                 tax: '0',
                 country: 'co',
                 lang: 'es',
-                external: 'true',
+                external: true,
 
-                // Configuración de respuesta
-                response: `${backendUrl}/api/payments/response`,
-                confirmation: `${backendUrl}/api/payments/confirmation`,
-                
                 // Información del cliente
                 name_billing: formData.customerName,
                 address_billing: formData.shippingAddress,
@@ -167,29 +179,51 @@ export const PaymentShop = () => {
                 number_doc_billing: '0000000000',
                 email_billing: formData.customerEmail,
                 
-                // Atributos adicionales
+                // Atributos adicionales - el ID de la orden es crucial para el webhook
                 extra1: orderId,
                 extra2: 'QR_CODES',
                 extra3: formData.quantity.toString(),
                 
-                // URLs de respuesta
-                response_url: `${backendUrl}/api/payments/response`,
+                // URLs de respuesta - Usar las configuradas en el panel de ePayco
+                confirmation: `${backendUrl}/api/payments/confirmation`,
                 confirmation_url: `${backendUrl}/api/payments/confirmation`,
                 
-                // Información de facturación
-                invoice: orderId,
+                // ID de la orden en tu sistema (referencia interna)
+                reference: orderId,
                 
-                // Modo de prueba
-                test: true
+                // Personalización visual usando onePageCheckout
+                style_checkout: 'onePageCheckout',
+                styleOnePageCheckout: {
+                    colorPrimary: '#5046E5',           // Color principal
+                    logoHeader: 'https://i.imgur.com/HoQVGlz.png', // Logo de PetConnect
+                    bankLogos: 'on',                   // Mostrar logos de bancos
+                    colorHeader: '#4338CA',            // Color del encabezado
+                    colorBtn: '#10B981',               // Color del botón principal (verde)
+                    colorBackground: '#F9FAFB',        // Fondo muy claro
+                    colorFontBtn: '#FFFFFF',           // Texto de botón blanco
+                    colorFooter: '#F3F4F6',            // Footer claro
+                    colorFontBtnHover: '#FFFFFF',      // Texto de botón hover
+                    heightLogo: '50px',                // Altura del logo
+                    colorBtnHover: '#059669',          // Color botón hover
+                    textBtn: 'Pagar ahora',            // Texto botón personalizado
+                    minimumCellWidth: 'false',         // Para dispositivos pequeños
+                    haveHeader: 'true',                // Mantener el encabezado
+                    fontFamily: 'Inter, system-ui, sans-serif', // Fuente moderna
+                },
+                
+                // Optimización para móviles
+                responsive: true,
             });
         } catch (error) {
             console.error('Error en handlePayWithEpayco:', error);
             setError(error.message);
             if (error.message === 'Sesión expirada') {
                 setSessionExpired(true);
+            } else if (error.message === 'No se pudo cargar el script de ePayco') {
+                setError('No se pudo conectar con ePayco. Por favor, intenta nuevamente.');
             }
         }
-    };
+    }, [formData, loadEpaycoScript]);
 
     return (
         <div className='w-full flex flex-col items-center justify-center bg-gray-100'>
