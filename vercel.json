@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/home",
+      "has": [
+        { "type": "query", "key": "ref_payco" }
+      ],
+      "destination": "/home?",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+} 
