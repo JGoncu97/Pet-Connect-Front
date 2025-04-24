@@ -15,6 +15,14 @@ import { ModalResponseEpayco } from '../../Components/ModalBasic/ModalResponseEp
 export const PaymentShop = () => {
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('ref_payco')) {
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    }, []);
+
     const [formData, setFormData] = useState({
         quantity: 1,
         customerName: '',
