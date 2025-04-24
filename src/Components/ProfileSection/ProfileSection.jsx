@@ -7,10 +7,27 @@ export const ProfileSection = ({ navigate }) => {
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
+                // Primero intentamos obtener los datos del sessionStorage
+                const storedUserData = sessionStorage.getItem("userData");
+                if (storedUserData) {
+                    try {
+                        const parsedData = JSON.parse(storedUserData);
+                        if (parsedData && typeof parsedData === 'object') {
+                            setUserData(parsedData);
+                            setIsLoading(false);
+                            return;
+                        }
+                    } catch (parseError) {
+                        console.error("Error al parsear datos del usuario:", parseError);
+                        // Continuamos con la llamada a la API si hay error al parsear
+                    }
+                }
+
                 let token = sessionStorage.getItem("accessToken");
                 
                 if (!token) {
@@ -45,7 +62,12 @@ export const ProfileSection = ({ navigate }) => {
                 }
 
                 const data = await response.json();
-                setUserData(data.user);
+                if (data.user) {
+                    setUserData(data.user);
+                    sessionStorage.setItem("userData", JSON.stringify(data.user));
+                } else {
+                    throw new Error('Datos de usuario no disponibles');
+                }
                 setIsLoading(false);
             } catch (error) {
                 console.error("Error al obtener el perfil del usuario:", error);
@@ -54,8 +76,12 @@ export const ProfileSection = ({ navigate }) => {
             }
         };
 
-        fetchUserProfile();
-    }, []); 
+        if (isAuthenticated) {
+            fetchUserProfile();
+        } else {
+            setIsLoading(false);
+        }
+    }, [isAuthenticated]); 
 
     if (isLoading) {
         return (

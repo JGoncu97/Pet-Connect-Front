@@ -45,7 +45,7 @@ export const Register = () => {
   // Destructuring contexts and hooks
   const { login } = auth;
   const { changeHasPetsUser } = pets;
-  const { handleRegister, accessTokenResult, error, isSuccess, isLoading } =
+  const { handleRegister, accessTokenResult, userResult, error, isSuccess, isLoading } =
     useFetchRegister();
 
   // Local states
@@ -75,12 +75,12 @@ export const Register = () => {
 
   // Efectos para las acciones de los estados
   useEffect(() => {
-    if (accessToken) {
-      login(accessToken, null);
+    if (accessToken && userResult) {
+      login(accessToken, userResult);
       changeHasPetsUser(false);
       navigate("/step-user");
     }
-  }, [accessToken]);
+  }, [accessToken, userResult]);
 
   // Manejo de error
   useEffect(() => {
