@@ -150,6 +150,7 @@ export const Login = () => {
               onSubmit={handleSubmit(onSubmit)}
               noValidate
               aria-label="Formulario de inicio de sesión"
+              className=" w-[20rem]"
             >
               {/* Email Input */}
               <div className="mb-4">
