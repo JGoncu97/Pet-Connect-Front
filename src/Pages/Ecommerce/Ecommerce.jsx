@@ -14,10 +14,10 @@ export const Ecommerce = () => {
     }
 
     return (
-        <div className="flex items-center justify-center h-auto ">
-            <div className="flex flex-col p-4 w-screen  items-center border">
+        <div className="flex items-center justify-center h-auto">
+            <div className="flex flex-col p-4 w-screen  items-center h-screen">
              
-                <div className="bg-white  h-screen w-full mx-auto md:p-10 lg:p-12 ">
+                <div className="bg-white w-full mx-auto md:p-10 lg:p-12 ">
                     <NavButton onClick={onClick} />
                     <h1 className="text-3xl font-bold text-center text-gray-800 ">
                         Etiqueta de codigo QR para tu que tu mascota tenga una mayor proteccion
