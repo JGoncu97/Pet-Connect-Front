@@ -28,16 +28,19 @@ export const Home = () => {
   useFetchPets(hasPetsUser);
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="flex flex-col bg-white p-6">
+    <div className="min-h-screen bg-gray-50">
+      <div className="flex flex-col bg-white p-6 pb-24">
         {/* Header */}
-        <header className="flex items-center justify-between bg-white py-4 ">
-          <img src={logo} alt="Logo" className="w-10 h-10 mr-2" />
-          <Link to={"/home"} className="text-3xl font-bold">
+        <header className="flex items-center justify-between bg-white py-4">
+          <img src={logo} alt="Logo" className="w-10 h-10" />
+          <Link to={"/home"} className="text-3xl font-bold text-brand">
             Pet Connect
           </Link>
-          <button className="w-14 h-14 flex items-center justify-center rounded-full" onClick={() => navigate('/notifications')}>
-            <img className='w-13 h-13' src={notification} alt="Notification"/>
+          <button 
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors duration-200" 
+            onClick={() => navigate('/notifications')}
+          >
+            <img className='w-8 h-8' src={notification} alt="Notification"/>
           </button>
         </header>
 
@@ -68,7 +71,7 @@ export const Home = () => {
         <PetsSection petList={petList} navigate={navigate}/>
 
         {/* Buttons Section */}
-        <section className="flex justify-between gap-4 mt-8">
+        <section className="flex justify-between gap-4 mt-8 mb-4">
           <button 
             onClick={() => navigate('/check-protection')} 
             className="flex flex-col items-center p-4 bg-teal-50 w-1/2 rounded-xl text-sm hover:bg-blue-50 transition-all duration-300 hover:shadow-md"
