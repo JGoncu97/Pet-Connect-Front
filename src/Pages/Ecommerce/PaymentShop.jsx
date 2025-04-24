@@ -277,7 +277,7 @@ export const PaymentShop = () => {
     return (
         <div className='w-full flex flex-col items-center justify-center bg-gray-100'>
             <div className='w-full max-w-2xl bg-white rounded-lg shadow-md p-4 sm:p-6 md:p-8'>
-                <NavButton onClick={() => navigate(-1)} />
+                <NavButton onClick={() => navigate('/Ecommerce')} />
                 <div className="text-left space-y-4">
                     <div className="bg-white p-4">
                         <div className="border-b border-gray-200 pb-4 mb-4">
