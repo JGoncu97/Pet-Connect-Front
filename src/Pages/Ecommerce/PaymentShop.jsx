@@ -139,7 +139,7 @@ export const PaymentShop = () => {
 
             const handler = window.ePayco.checkout.configure({
                 key: import.meta.env.VITE_EPAYCO_PUBLIC_KEY,
-                test: import.meta.env.VITE_EPAYCO_TEST === 'true'
+                test: 'true'
             });
             
             // Abrir el checkout

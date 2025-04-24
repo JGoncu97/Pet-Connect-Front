@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { isTokenExpired } from "../../Utils/Helpers/IsTokenExpired/IsTokenExpired";
 import { FetchRefreshToken } from "../../Utils/Fetch/FetchRefreshToken/FetchRefreshToken";
-import { FetchUpdatePhotoPet } from "../../Utils/FetchUpdatePhotoPet/FetchUpdatePhotoPet";
 import { FetchUpdateUser } from "../../Utils/Fetch/FetchUpdateUser/FetchUpdateUser";
 import { useIsFetchedUsers } from "../../Contexts/isFetchedUsers/isFetchedUsers";
 

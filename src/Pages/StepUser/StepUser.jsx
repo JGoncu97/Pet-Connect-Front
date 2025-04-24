@@ -97,25 +97,31 @@ export const StepUser = () => {
           if (responseUser.ok) {
               sessionStorage.setItem("userData", JSON.stringify(responseUser.user))
   
+              // Siempre enviamos una imagen, ya sea la seleccionada o la por defecto
+              const formDataPhoto = new FormData();
               if (filePfp) {
-                  const formDataPhoto = new FormData();
                   formDataPhoto.append("profile_picture", filePfp);
+              } else {
+                  // Si no hay imagen seleccionada, enviamos la imagen por defecto
+                  const response = await fetch(DefaultProfile);
+                  const blob = await response.blob();
+                  formDataPhoto.append("profile_picture", blob, "default-profile.png");
+              }
   
-                  try {
-                      const responsePhoto = await FetchUpdatePhotoU(formDataPhoto, token);
-                      if (responsePhoto.ok) {
-                          console.log("Foto de perfil actualizada:", responsePhoto);
-                      } else {
-                          console.error("No se pudo actualizar la foto.");
-                      }
-                  } catch (error) {
-                      console.error("Error al subir la foto:", error);
+              try {
+                  const responsePhoto = await FetchUpdatePhotoU(formDataPhoto, token);
+                  if (responsePhoto.ok) {
+                      console.log("Foto de perfil actualizada:", responsePhoto);
+                  } else {
+                      console.error("No se pudo actualizar la foto:", responsePhoto.message);
                   }
+              } catch (error) {
+                  console.error("Error al subir la foto:", error);
               }
   
               navigate("/step-pet");
           } else {
-              console.error("Error al registrar usuario.");
+              console.error("Error al registrar usuario:", responseUser.message);
           }
       } catch (error) {
           console.error("Error al registrar Usuario:", error);
