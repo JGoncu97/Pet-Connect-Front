@@ -11,18 +11,11 @@ import WarningImg from '../../assets/images/advertising.png';
 import ErrorImg from '../../assets/images/error.png';
 import SuccessImg from '../../assets/images/succes.png';
 import { ModalResponseEpayco } from '../../Components/ModalBasic/ModalResponseEpayco';
+import { ModalSpinner } from '../../Components/ModalBasic/ModalSpinner';
 
 export const PaymentShop = () => {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('ref_payco')) {
-            const newUrl = window.location.pathname;
-            window.history.replaceState({}, document.title, newUrl);
-        }
-    }, []);
-
+    
     const [formData, setFormData] = useState({
         quantity: 1,
         customerName: '',
@@ -34,15 +27,61 @@ export const PaymentShop = () => {
         shippingCountry: 'Colombia',
         shippingPostalCode: ''
     });
-    const [isLoading, setIsLoading] = useState(false);
-    const [orderCreated, setOrderCreated] = useState(false);
-    const [error, setError] = useState(null);
-    const [sessionExpired, setSessionExpired] = useState(false);
 
     const { register, handleSubmit, formState: { errors }, setValue } = useForm({
         mode: 'onChange',
         defaultValues: formData
     });
+
+    const [showSpinner, setShowSpinner] = useState(false);
+
+    // Cargar datos del usuario existente
+    useEffect(() => {
+        const loadUserData = () => {
+            const userData = sessionStorage.getItem('userData');
+            if (userData) {
+                try {
+                    const parsedUserData = JSON.parse(userData);
+                    setFormData(prev => ({
+                        ...prev,
+                        customerName: parsedUserData.name || '',
+                        customerEmail: parsedUserData.email || '',
+                        customerPhone: parsedUserData.phone || '',
+                        shippingAddress: parsedUserData.address || '',
+                        shippingCity: parsedUserData.city || '',
+                        shippingState: parsedUserData.state || '',
+                        shippingCountry: parsedUserData.country || 'Colombia'
+                    }));
+
+                    // Actualizar los valores del formulario
+                    setValue('customerName', parsedUserData.name || '');
+                    setValue('customerEmail', parsedUserData.email || '');
+                    setValue('customerPhone', parsedUserData.phone || '');
+                    setValue('shippingAddress', parsedUserData.address || '');
+                    setValue('shippingCity', parsedUserData.city || '');
+                    setValue('shippingState', parsedUserData.state || '');
+                    setValue('shippingCountry', parsedUserData.country || 'Colombia');
+                } catch (error) {
+                    console.error('Error al cargar datos del usuario:', error);
+                }
+            }
+        };
+
+        loadUserData();
+    }, [setValue]);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [orderCreated, setOrderCreated] = useState(false);
+    const [error, setError] = useState(null);
+    const [sessionExpired, setSessionExpired] = useState(false);
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('ref_payco')) {
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    }, []);
 
     useEffect(() => {
         const checkSession = async () => {
@@ -224,6 +263,16 @@ export const PaymentShop = () => {
             }
         }
     }, [formData, loadEpaycoScript]);
+
+    const handleStartPayment = useCallback(() => {
+        setOrderCreated(false);
+        setShowSpinner(true);
+        
+        // Esperar 1.5 segundos antes de iniciar el pago
+        setTimeout(() => {
+            handlePayWithEpayco();
+        }, 1500);
+    }, []);
 
     return (
         <div className='w-full flex flex-col items-center justify-center bg-gray-100'>
@@ -421,7 +470,7 @@ export const PaymentShop = () => {
                     setModalOpen={setSessionExpired}
                     navigate={navigate}
                     path="/login"
-                    textResponse="Tu sesión ha expirado. Por favor, inicia sesión nuevamente."
+                    textResponse="Tu sesión ha expirada. Por favor, inicia sesión nuevamente."
                     buttonText="Iniciar sesión"
                 />
             ) : error ? (
@@ -442,8 +491,10 @@ export const PaymentShop = () => {
                     navigate={navigate}
                     path="/payment/shop"
                     textResponse="Tu orden ha sido creada y está lista para el pago."
-                    onClick={handlePayWithEpayco}
+                    onClick={handleStartPayment}
                     buttonText="Pagar con ePayco"
+                    buttonText2="Revisar tus datos de envío"
+                    onClick2={() => setOrderCreated(false)}
                 />
             ) : isLoading ? (
                 <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-md">
@@ -453,6 +504,7 @@ export const PaymentShop = () => {
                     </div>
                 </div>
             ) : null}
+            {showSpinner && <ModalSpinner />}
         </div>
     );
 }

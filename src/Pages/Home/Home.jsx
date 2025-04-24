@@ -33,7 +33,7 @@ export const Home = () => {
         {/* Header */}
         <header className="flex items-center justify-between bg-white py-4">
           <img src={logo} alt="Logo" className="w-10 h-10" />
-          <Link to={"/home"} className="text-3xl font-bold text-brand">
+          <Link to={"/home"} className="text-3xl font-bold">
             Pet Connect
           </Link>
           <button 
