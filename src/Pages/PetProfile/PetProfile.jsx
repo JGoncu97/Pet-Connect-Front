@@ -162,16 +162,17 @@ export const PetProfile = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center from-gray-50 to-gray-100 ">
-      <div className="bg-white shadow-xl p-6  w-full max-w-md space-y-6 border">
-        <div className="flex items-center justify-start mb-6 text-center">
+    <div className="flex flex-col items-center justify-center  ">
+      <div className="bg-white shadow-xl p-6   max-w-md space-y-6 border">
+        <div className="flex items-center  mb-6 text-center  w-screen p-1 ">
           <NavButton onClick={() => navigate(-1)} />
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 flex-grow text-center">
-            Nombra tu mascota 
+          <h2 className="text-2xl pr-10 sm:text-2xl font-bold text-gray-800 flex-grow text-center">
+            Perfil de tu mascota
           </h2>
         </div>
 
-        <div className="flex justify-between i md:flex-row items-center  md:space-y-0 md:space-x-6">
+        
+        <div className="flex justify-between items-cente p-4  md:flex-row md:space-y-0 md:space-x-6">
           <div className="relative w-25 h-25  flex justify-center items-center">
             <label htmlFor="profile-upload" className="cursor-pointer flex justify-center items-center ">
               <img
@@ -232,7 +233,7 @@ export const PetProfile = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-4 p-4">
           <label className="font-semibold text-lg text-gray-700">
             Seguridad de la mascota
           </label>
