@@ -81,7 +81,7 @@ export const PetDetails = () => {
           <div className="w-full max-w-md sm:max-w-xl md:max-w-2xl bg-white p-4 sm:p-6">
             <div className="flex justify-center items-center  mt-4 w-screen">
                 <div className="absolute left-0 ">
-                  <NavButton navigate={handleBackButton}/>
+                  <NavButton onClick={handleBackButton}/>
                 </div>
                 <h1 className="text-center pr-10 text-xl sm:text-2xl font-bold text-gray-800">
                   Detalles de la Mascota
