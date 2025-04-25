@@ -15,19 +15,36 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import petPhoto from '../../assets/images/petPhoto.png'
 import addPetPhoto from '../../assets/images/addPetPhoto.png'
 import { FooterNav } from "../../Components/FooterNav/FooterNav";
-
-
+import { NavButton } from "../../Components/NavButton/NavButton";
 
 export const PetDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { pet_id } = useParams();
   const [pet, setPet] = useState({});
+  const [userData, setUserData] = useState(null);
   const fetchedPets = useIsFetchedPets();
   const { isFetchedPets } = fetchedPets ?? {};
   const pets = usePet();
   const navigate = useNavigate();
   const { findPet } = pets ?? {};
   const { getPetById, petResult } = useFetchPetById();
+
+  const handleBackButton = () => {
+    navigate('/home');
+  }
+
+  useEffect(() => {
+    // Obtener datos del usuario del sessionStorage
+    const storedUserData = sessionStorage.getItem("userData");
+    if (storedUserData) {
+      try {
+        const parsedData = JSON.parse(storedUserData);
+        setUserData(parsedData);
+      } catch (error) {
+        console.error("Error al parsear datos del usuario:", error);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (!isFetchedPets) {
@@ -58,8 +75,9 @@ export const PetDetails = () => {
   return (
     <>
       {pet ? (
-        <section className="flex flex-col items-center min-h-screen px-4 py-8 sm:py-12">
+        <section className="flex flex-col items-center  sm:py-12">
           <div className="w-full max-w-md sm:max-w-xl md:max-w-2xl bg-white p-4 sm:p-6 rounded-xl shadow-lg">
+            <NavButton navigate={handleBackButton}/>
             <h1 className="mt-4 sm:mt-5 text-center text-xl sm:text-2xl font-bold text-gray-800">
               Detalles de la Mascota
             </h1>
@@ -95,7 +113,9 @@ export const PetDetails = () => {
             <div className="p-4 sm:p-6">
               <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">{pet.name}</h1>
               <div className="flex items-center gap-2 mb-4 sm:mb-6">
-                <span className="text-gray-700 text-base sm:text-lg">Ciudad, País</span>
+                <span className="text-gray-700 text-base sm:text-lg">
+                  {userData?.city || 'Ciudad no especificada'}, {userData?.country || 'País no especificado'}
+                </span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                 {petDetails.map((detail, index) => (
