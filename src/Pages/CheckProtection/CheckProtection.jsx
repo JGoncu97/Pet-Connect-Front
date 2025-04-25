@@ -67,7 +67,7 @@ export const CheckProtection = () => {
   const isSelectedPet = qrsResult?.[0]?.petId?._id === selectedPet?._id;
 
   // Filtrar QRs para la mascota seleccionada
-  const selectedPetQRs = qrsResult?.filter(qr => qr.petId._id === selectedPet?._id) || [];
+  const selectedPetQRs = qrsResult?.filter(qr => qr.petId && qr.petId._id === selectedPet?._id) || [];
 
   return (
     <div className="max-w-full sm:max-w-3xl md:max-w-4xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-lg">
