@@ -60,9 +60,9 @@ export const StepPet = () => {
                                         validation={{ required: "El nombre es obligatorio" }}
                                         />
         
-                                    <PetTypeSelector selectedPet={selectedPet} setSelectedPet={setSelectedPet} />           
+                                    <PetTypeSelector textLabel="¿Cuál es tu tipo de Mascota?" selectedPet={selectedPet} setSelectedPet={setSelectedPet} />           
                             </div>
-                            <ButtonPrimary  text='Continuar' />
+                            <ButtonPrimary  text='Confirmar' />
                             <ButtonSecondary path='/home' text='Saltar' />
                         </form>
                     </div>

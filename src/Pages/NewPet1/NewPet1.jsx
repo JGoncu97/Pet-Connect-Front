@@ -70,6 +70,7 @@ export const NewPet1 = () => {
                 className="w-full"
               />
               <PetTypeSelector
+                textLabel="¿Cuál es tu tipo de Mascota?"
                 selectedPet={selectedPet}
                 setSelectedPet={setSelectedPet}
               />
@@ -81,7 +82,7 @@ export const NewPet1 = () => {
                   <AiOutlineLoading3Quarters className="animate-spin text-2xl text-blue-500" />
                 </div>
               ) : (
-                <ButtonPrimary text="Continuar" />
+                <ButtonPrimary text="Siguiente" />
               )}
             </div>
 
