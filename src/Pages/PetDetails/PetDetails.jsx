@@ -17,7 +17,7 @@ import addPetPhoto from '../../assets/images/addPetPhoto.png'
 import { FooterNav } from "../../Components/FooterNav/FooterNav";
 import { NavButton } from "../../Components/NavButton/NavButton";
 import SharedImg from '../../assets/images/shared.png'
-import LocationImg from '../../assets/images/location.png'
+import LocationImg from '../../assets/images/Location.png'
 
 export const PetDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
