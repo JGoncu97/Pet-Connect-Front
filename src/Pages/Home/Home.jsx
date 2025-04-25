@@ -32,15 +32,15 @@ export const Home = () => {
       <div className="flex flex-col bg-white p-6 pb-24">
         {/* Header */}
         <header className="flex items-center justify-between bg-white py-4">
-          <img src={logo} alt="Logo" className="w-10 h-10" />
-          <Link to={"/home"} className="text-3xl font-bold">
+          <img src={logo} alt="Logo" className="w-7 h-7" />
+          <Link to={"/home"} className="text-2xl font-bold">
             Pet Connect
           </Link>
           <button 
             className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors duration-200" 
             onClick={() => navigate('/notifications')}
           >
-            <img className='w-8 h-8' src={notification} alt="Notification"/>
+            <img className='w-10 h-10' src={notification} alt="Notification"/>
           </button>
         </header>
 
