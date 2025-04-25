@@ -129,7 +129,9 @@ export const PetProfile = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      setProfileImage(petPicture);
+      if (petPicture) {
+        setProfileImage(petPicture);
+      }
       setModalOpen(true);
     }
   }, [isSuccess]);
@@ -342,7 +344,7 @@ export const PetProfile = () => {
 
         {modalOpen && (
           <ModalResponse
-            imgProfile={profileImage}
+            imgProfile={profileImage || (selectedPet === "dog" ? defaultDogPfp : defaultCatPfp)}
             setModalOpen={setModalOpen}
             navigate={navigate}
             path="/home"
